@@ -1,35 +1,36 @@
-from fastapi import FastAPI,HTTPException
+from fastapi import FastAPI
+from app.data_interactor import *
 
-
+db = get_database()
+contacts_collection = db["contacts"] if db is not None else None
 app = FastAPI()
 
 
 @app.get("/contacts")
 def get_all():
     try:
-        pass
-    except:
-        raise TypeError("Something went wrong")
+        get_all_contacts()
+    except Exception as err:
+        return f"Unexpected {err=}, {type(err)=}"
 
 @app.post("/contacts")
 def create(contact):
     try:
-        pass
-    except:
-        raise TypeError("Something went wrong")
+        create_contact(contact)
+    except Exception as err:
+        return f"Unexpected {err=}, {type(err)=}"
 
 @app.put("/contacts/{id}")
-def update(my_id,change_place,new_value):
+def update(id,update):
     try:
-        pass
-    except:
-        raise TypeError("Something went wrong")
+        update_contact(id,update)
+    except Exception as err:
+        return f"Unexpected {err=}, {type(err)=}"
 
 @app.delete("/contacts/{id}")
-def delete(my_id):
+def delete(id):
     try:
-        pass
-    except:
-        raise TypeError("Something went wrong")
-
+        delete_contact(id)
+    except Exception as err:
+        return f"Unexpected {err=}, {type(err)=}"
 

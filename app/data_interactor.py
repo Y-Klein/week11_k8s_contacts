@@ -31,10 +31,6 @@ def get_database():
         return None
 
 
-db = get_database()
-contacts_collection = db["contacts"] if db is not None else None
-
-
 def create_contact(document:Contact):
     result = contacts_collection.insert_one(Contact.get_dict(document))
     return f"Inserted ID: {result.inserted_id}"
