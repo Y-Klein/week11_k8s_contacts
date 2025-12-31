@@ -1,36 +1,35 @@
 from fastapi import FastAPI
 from app.data_interactor import *
 
-db = get_database()
-contacts_collection = db["contacts"] if db is not None else None
+
 app = FastAPI()
 
 
 @app.get("/contacts")
 def get_all():
     try:
-        get_all_contacts()
+        return get_all_contacts()
     except Exception as err:
         return f"Unexpected {err=}, {type(err)=}"
 
 @app.post("/contacts")
-def create(contact):
+def create(contact:Contact):
     try:
-        create_contact(contact)
+        return create_contact(contact)
     except Exception as err:
         return f"Unexpected {err=}, {type(err)=}"
 
 @app.put("/contacts/{id}")
-def update(id,update):
+def update(id,update:dict):
     try:
-        update_contact(id,update)
+        return update_contact(id,update)
     except Exception as err:
         return f"Unexpected {err=}, {type(err)=}"
 
 @app.delete("/contacts/{id}")
 def delete(id):
     try:
-        delete_contact(id)
+        return delete_contact(id)
     except Exception as err:
         return f"Unexpected {err=}, {type(err)=}"
 
