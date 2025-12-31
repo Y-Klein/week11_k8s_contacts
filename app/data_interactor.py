@@ -35,7 +35,7 @@ contacts_collection = db["contacts"] if db is not None else None
 
 def create_contact(document:Contact):
     exists = contacts_collection.count_documents(
-        {"phone_number": document.phone_number}, limit=1) <= 0
+        {"phone_number": document.phone_number}, limit=1) == 0
     if exists:
         result = contacts_collection.insert_one(Contact.get_dict(document))
         return f"message : Contact created successfully , Inserted ID: {result.inserted_id} "
@@ -51,7 +51,7 @@ def get_all_contacts():
     return result
 
 def update_contact(id,update:dict):
-    exists = contacts_collection.count_documents({"_id": id}, limit=1) > 0
+    exists = contacts_collection.count_documents({"_id": ObjectId(id)}, limit=1) > 0
     if exists:
         contacts_collection.update_one({"_id": ObjectId(id)},{"$set": update})
         return True
@@ -59,7 +59,7 @@ def update_contact(id,update:dict):
         raise TypeError("ID number not found")
 
 def delete_contact(id):
-    exists = contacts_collection.count_documents({"_id": id}, limit=1) > 0
+    exists = contacts_collection.count_documents({"_id": ObjectId(id)}, limit=1) > 0
     if exists:
         contacts_collection.delete_one({"_id": ObjectId(id)})
         return True
@@ -67,8 +67,5 @@ def delete_contact(id):
         raise TypeError("ID number not found")
 
 
-# create_contact(Contact(first_name="aaa",last_name="bbb",phone_number="111"))
-print(get_all_contacts())
-# print(update_contact("6954decd4d207e1ece4548f9",{"phone_number": "11111"}))
-# print(delete_contact('6954dd926cf5597b972aba1f'))
+
 
