@@ -7,3 +7,10 @@
 # Environment
 *.env
 
+# files
+lab-04-understanding-pods.md
+lab-05-services-connecting-pods.md
+pymongo_cheatsheet.md
+week11_k8s_mongo_contacts_api.md
+
+
