@@ -19,7 +19,7 @@ class Contact(BaseModel):
 def get_database():
 
     try:
-        client = MongoClient("host.docker.internal", 27017)
+        client = MongoClient("mongodb-service", 27017)
         client.admin.command("ping")
         print("✓ Successfully connected to MongoDB!")
         my_db = client["contacts_db"]
