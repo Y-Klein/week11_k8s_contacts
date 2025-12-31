@@ -19,7 +19,7 @@ class Contact(BaseModel):
 def get_database():
 
     try:
-        client = MongoClient("localhost", 27017)
+        client = MongoClient("host.docker.internal", 27017)
         client.admin.command("ping")
         print("✓ Successfully connected to MongoDB!")
         my_db = client["contacts_db"]
@@ -38,7 +38,7 @@ def create_contact(document:Contact):
         {"phone_number": document.phone_number}, limit=1) <= 0
     if exists:
         result = contacts_collection.insert_one(Contact.get_dict(document))
-        return f"Inserted ID: {result.inserted_id}"
+        return f"message : Contact created successfully , Inserted ID: {result.inserted_id} "
     else:
         raise TypeError("The number entered already exists")
 

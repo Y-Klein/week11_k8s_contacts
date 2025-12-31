@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from app.data_interactor import *
+from data_interactor import *
 
 
 app = FastAPI()
